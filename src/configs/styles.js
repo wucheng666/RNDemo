@@ -5,6 +5,12 @@
  */
 
 import {PixelRatio, Dimensions, StyleSheet} from 'react-native';
+// iPhoneX
+const X_WIDTH = 375
+const X_HEIGHT = 812
+const SCREEN_WIDTH = Dimensions.get("window").width
+const SCREEN_HEIGHT = Dimensions.get("window").height
+
 
 const MainStyle = {
 
@@ -14,7 +20,15 @@ const MainStyle = {
     },
 
     size: (v) => v / PixelRatio.get(),
-
+    pic: {
+        size:{
+            size54x54: "?x-oss-process=image/resize,m_lfit,h_54,w_54/quality,q_20",
+            size80x80: "?x-oss-process=image/resize,m_lfit,h_80,w_80/quality,q_20",
+            sizepad80x80: "?x-oss-process=image/resize,m_pad,h_80,w_80/quality,Q_100",
+            size114x152: "?x-oss-process=image/resize,m_lfit,h_114,w_152/quality,q_20",
+            size500x800: "?x-oss-process=image/resize,m_lfit,h_500,w_800"
+        }
+    },
     font: {
         size: {
             size10: 10,//弱
@@ -57,7 +71,8 @@ const MainStyle = {
             assit1: '#f86670',
             assit2: '#cccccc',
             assit3: '#40b0ff',
-            assit4 : '#EEEEEE'
+            assit4 : '#EEEEEE',
+            assit5: '#5AA9FA',
         }
     },
 
@@ -91,10 +106,17 @@ const MainStyle = {
             searchBar: 'rgba(255,255,255,0.3)',
             assit10: '#e9e9ef',
             assit11: '#5AA9FA',
-            assit12 : "#5AA9FA"
+            assit12: "#F8F8F8"
         }
     }
 };
 
+MainStyle.isIphoneX = function () {
+    return (
+        Platform.OS === "ios" &&
+        ((SCREEN_HEIGHT === X_HEIGHT && SCREEN_WIDTH === X_WIDTH) ||
+            (SCREEN_HEIGHT === X_WIDTH && SCREEN_WIDTH === X_HEIGHT))
+    )
+}
 
 module.exports = MainStyle;

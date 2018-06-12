@@ -70,6 +70,17 @@ class FadeInViewDemo extends NavigationComponent {
                     <Text style={{color : MainStyle.font.color.color1, fontSize : MainStyle.font.size.size24}}>Swipeout</Text>
                 </TouchableOpacity>
                 <View style={{height : 10}}/>
+
+                <TouchableOpacity
+                    onPress={()=>this._goTo("modulesdemo", "Modules Demo")}
+                    style={{
+                        flexDirection : "row",
+                        justifyContent : "center",
+                        alignItems : "center",
+                        height : 50, backgroundColor : MainStyle.background.color.main}}>
+                    <Text style={{color : MainStyle.font.color.color1, fontSize : MainStyle.font.size.size24}}>Modules Demo</Text>
+                </TouchableOpacity>
+                <View style={{height : 10}}/>
             </View>
         )
     }

@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 import {StackNavigator, NavigationActions} from 'react-navigation';
 
-import RouteHelp from '../routeHelp';
+import {RouteHelp} from '/base';
 const isAndroid = Platform.OS === 'android';
 
 export default class FactoryContainer extends Component {
@@ -33,7 +33,6 @@ export default class FactoryContainer extends Component {
     }
 
     render() {
-        console.log(".....ttttt")
         let _this = this;
         const AppStackNavigator = StackNavigator(this.props.routes, {
             initialRouteName: this.props.initialRoute || 'Home',
@@ -42,7 +41,7 @@ export default class FactoryContainer extends Component {
                 // header: null,
                 gesturesEnabled: false
             },
-            onTransitionEnd: (e) => {
+            onTransitionStart: (e) => {
                 let {scenes} = e;
                 _this.setRouteHelp(scenes)
             }
@@ -64,6 +63,14 @@ export default class FactoryContainer extends Component {
                         if (prevScreen !== currentScreen) {
                             this._routes = currentState.routes;
                             this._sceneName = currentScreen;
+
+                            const route = currentState.routes[currentState.index];
+                            const prevRoute = prevState.routes[prevState.index];
+
+                            if(route.params.initPage && prevRoute.params.needRefresh){
+                                //刷新跳转后的页面
+                                route.params.initPage()
+                            }
 
                             // 如果有eventId 表示需要友盟统计，此时应当调用友盟api
                             if(currentScreen && NativeModules.Umeng){

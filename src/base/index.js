@@ -5,11 +5,13 @@
 import NavigationComponent from './navigation-component';
 import BasePureComponent from './base-pure-component';
 import BaseComponent from './base-component';
+import RouteHelp from './routeHelp';
 
 const m = {
     NavigationComponent: NavigationComponent,
     BasePureComponent: BasePureComponent,
-    BaseComponent: BaseComponent
+    BaseComponent: BaseComponent,
+    RouteHelp : RouteHelp
 };
 
 module.exports = m;

@@ -4,13 +4,14 @@
 
 import React, {Component} from 'react';
 
-import {View,TouchableOpacity,Image,Platform,NativeModules,Text} from 'react-native';
+import {View, Text, TouchableOpacity, Image, Platform,NativeModules} from 'react-native';
 
 import {NavigationActions} from 'react-navigation';
-import {MainStyle} from '../configs';
+import {MainStyle} from '/configs';
 
 import RouteHelp from './routeHelp';
-// import BMIcon from '/modules/bm-icon';
+
+import BMIcon from '/modules/bm-icon';
 
 
 export default class NavigationComponent extends Component {
@@ -30,33 +31,28 @@ export default class NavigationComponent extends Component {
             <View>
                 <TouchableOpacity style={{width:44,height:44,justifyContent:'center',alignItems:'center'}}
                                   onPress={()=>{
-                                                    let currentPage = NavigationComponent.pages[navigation.state.key];
-                                                     if(currentPage.backPress){  //如果页面设置了backPress的回调，则响应回调并把navigation传过去
-                                                         currentPage.backPress(navigation);
-                                                     }else {  //否则默认返回上一个页面
-                                                         let canGoBack = navigation.goBack();
-                                                         if (!canGoBack){
-                                                             NativeModules.micro.close();
-                                                         }
-                                                     }
-                                                 }}>
+                                      let currentPage = NavigationComponent.pages[navigation.state.key];
+                                      if(currentPage.backPress){  //如果页面设置了backPress的回调，则响应回调并把navigation传过去
+                                          currentPage.backPress(navigation);
+                                      }else {  //否则默认返回上一个页面
+                                          let canGoBack = navigation.goBack();
+                                          if (!canGoBack){
+                                              NativeModules.micro.close();
+                                          }
+                                      }
+                                  }}>
                     {/*<Image source={require('#/images/base/navBarLeft.png')}/>*/}
-
-                    {/*<BMIcon icon={0xe648}*/}
-                            {/*style={{*/}
-                                {/*fontSize : 18,*/}
-                                {/*// marginLeft : 16,*/}
-                                {/*color : MainStyle.color.assit6*/}
-                            {/*}}/>*/}
-                    <Text>返回</Text>
-                    {/*<BMIcon color={MainStyle.color.assit6} name={'fanhui1'} size={MainStyle.font.size.size24} style={''}/>*/}
-
+                    <BMIcon icon={0xe648}
+                            style={{
+                                fontSize : 18,
+                                // marginLeft : 16,
+                                color : MainStyle.color.assit6
+                            }}/>
                 </TouchableOpacity>
             </View>
         );
 
         let headerRightView = (navigation.state.params && navigation.state.params.headerRight) ? navigation.state.params.headerRight : null;
-
 
         if (navigation.state.params) {
 
@@ -68,12 +64,17 @@ export default class NavigationComponent extends Component {
                     fontFamily: 'PingFangSC-Medium',
                     fontSize: MainStyle.font.size.size18
                 },
-                title: navigation.state.params.title,
+                title: navigation.state.params.title, // 这里navigation有bug， 首页第一次进来不能同时设定title和right
                 headerTintColor: '#fff',
                 headerLeft:headerLeftView,
                 headerRight:headerRightView || <Text/>,
-                headerStyle: {backgroundColor: MainStyle.background.color.assit11,height:os === 'ios' ? 64 : 44,shadowOpacity: 0,elevation: 0},
-                gesturesEnabled : true
+                headerStyle: {
+                    backgroundColor: MainStyle.background.color.assit11,
+                    height: 44,
+                    shadowOpacity: 0,
+                    elevation: 0,
+                    borderBottomWidth : 0
+                },
             };
         }
     };
@@ -85,7 +86,17 @@ export default class NavigationComponent extends Component {
         } else {
             this.data = {};
         }
-        NavigationComponent.pages[this.props.navigation.state.key] = this;
+        if(this.props.navigation){
+            NavigationComponent.pages[this.props.navigation.state.key] = this;
+        }
+        this.setParams({
+            needRefresh : true // 判断是否需要刷新,默认需要刷新
+        })
+        /**
+         * 封装侧滑组件时用到；主要用于收集所有列表行组件实例
+         * @type {Array}
+         */
+        this.refList = [];
     }
 
     /**
@@ -157,8 +168,6 @@ export default class NavigationComponent extends Component {
             let {setParams}  = this.props.navigation;
 
             setParams({title: this.props.navigation.state.params.title});
-
-
         }
     }
 
@@ -176,6 +185,7 @@ export default class NavigationComponent extends Component {
     }
 
     setParams(params) {
+
         if (this.props.navigation) {
             let setParamsAction = NavigationActions.setParams({
                 params: params,

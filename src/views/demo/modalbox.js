@@ -15,12 +15,12 @@ import {
     TextInput
 } from 'react-native';
 
-var screen = Dimensions.get('window');
+let screen = Dimensions.get('window');
 
-class Modalbox extends NavigationComponent {
+export default class Modalbox extends NavigationComponent {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             isOpen: false,
             isDisabled: false,
@@ -42,9 +42,9 @@ class Modalbox extends NavigationComponent {
     }
 
     renderList() {
-        var list = [];
+        let list = [];
 
-        for (var i=0;i<50;i++) {
+        for (let i=0;i<50;i++) {
             list.push(<Text style={styles.text} key={i}>Elem {i}</Text>);
         }
 
@@ -52,7 +52,7 @@ class Modalbox extends NavigationComponent {
     }
 
     render() {
-        var BContent = <Button onPress={() => this.setState({isOpen: false})} style={[styles.btn, styles.btnModal]}>X</Button>;
+        let BContent = <Button onPress={() => this.setState({isOpen: false})} style={[styles.btn, styles.btnModal]}>X</Button>;
 
         return (
             <View style={styles.wrapper}>
@@ -162,4 +162,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default Modalbox;
+// export default Modalbox;
