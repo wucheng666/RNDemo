@@ -1,6 +1,3 @@
-###### 测试工程地址
-
-> http://git.dev.qianmi.com/bm-micro-app/ModulesDemo.git
 
 ###### 刷新当前页面
 
