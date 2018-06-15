@@ -67,7 +67,7 @@ export default class FactoryContainer extends Component {
                             const route = currentState.routes[currentState.index];
                             const prevRoute = prevState.routes[prevState.index];
 
-                            if(route.params.initPage && prevRoute.params.needRefresh){
+                            if(route.params && route.params.initPage && prevRoute.params.needRefresh){
                                 //刷新跳转后的页面
                                 route.params.initPage()
                             }

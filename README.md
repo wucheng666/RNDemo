@@ -1,3 +1,57 @@
+###### 测试工程地址
+
+> http://git.dev.qianmi.com/bm-micro-app/ModulesDemo.git
+
+###### 刷新当前页面
+
+> 示例
+
+```
+    1.需要在constructor中定义initPage并在当前页面A实现initPage方法,这样B页面跳转过来时会执行initPage方法
+    constructor(props) {
+        super(props)
+
+        this.setParams({
+            initPage : this.initPage
+        })
+    }
+
+    2.如果当前页面A定义了initPage且有其他页面C跳转到此页面时不需要刷新A页面
+
+        需要在C页面中将needRefresh置为false (默认为true)
+        constructor(props) {
+            super(props)
+
+             this.setParams({
+                needRefresh : false
+            })
+        }
+        
+    3.  导航栏分别是:  左侧返回  中间标题  后侧处理
+        先有 从列表页A到编辑页B，
+        1.点返回时需要刷新A(场景：列表页A 到详情页B 编辑是在C页， C 处理完回到B ，此时在B页点返回需要刷新A页)
+        2.点返回不需要刷新A
+        
+        在B页重写backPress方法如下：
+            constructor(props) {
+                super(props)
+                this.state = {
+                    gBack : true, //默认点击返回键（即不操作页面）
+                }
+            }
+            
+            backPress(){
+                if(this.state.gBack){ //默认点击返回了，不需要刷新前一个页面（自行控制）
+                    this.setParams({
+                        needRefresh : false
+                    })
+                    this.goBackToRoute("staffmanage", {title : "员工管理"})
+                }else{ //若点击了保存，自行将gBack置为false,即可刷新A页面
+                     this.goBackToRoute("staffmanage", {title : "员工管理"})
+                 }
+            }
+
+```
 
 <h3>Confirm</h3>
 
@@ -38,9 +92,10 @@
         rightBnText={"确定"}
     />
 ```
-###### 图片展示
-![](testimg/confirm.png)
 
+###### 图片展示
+
+![](testimg/confirm.png)
 
 <h3>ModalSelect</h3>
     
@@ -89,7 +144,9 @@
         }}
     />
 ```
+
 ###### 图片展示
+
 ![](testimg/modalSelect.png)
 
 <h3>Uploading</h3>
@@ -113,10 +170,10 @@
 ```
    <Uploading visible={this.state.imgVisible} />
 ```
+
 ###### 图片展示
+
 ![](testimg/uploading.png)
-
-
 
 <h3>IFlatList</h3>
     
@@ -282,9 +339,10 @@
        console.log(`返回在rightElement属性集合中的index : ${index}`)
    }
 ```
-###### 图片展示
-![](testimg/cehua.png)
 
+###### 图片展示
+
+![](testimg/cehua.png)
 
 <h3>虚线</h3>
     
@@ -322,7 +380,9 @@
        length={59}
        />
 ```
+
 ###### 图片展示
+
 ![](testimg/dashline.png)
 
 <h3>计数器</h3>
@@ -353,9 +413,10 @@
        onBack={num => this.setState({ count: num })}
    />
 ```
-###### 图片展示
-![](testimg/counter.png)
 
+###### 图片展示
+
+![](testimg/counter.png)
 
 <h3>添加组件</h3>
     
@@ -388,9 +449,10 @@
        }}
    />
 ```
-###### 图片展示
-![](testimg/add.png)
 
+###### 图片展示
+
+![](testimg/add.png)
 
 <h3>展示行元素</h3>
     
@@ -421,9 +483,10 @@
        value={"右侧展示的内容"}
    />
 ```
-###### 图片展示
-![](testimg/showinfo.png)
 
+###### 图片展示
+
+![](testimg/showinfo.png)
 
 <h3>行输入框</h3>
     
@@ -468,9 +531,10 @@
        keyboardType={"numeric"}
    />
 ```
-###### 图片展示
-![](testimg/input.png)
 
+###### 图片展示
+
+![](testimg/input.png)
 
 <h3>搜索框</h3>
     
@@ -506,9 +570,10 @@
        }}
    />
 ```
-###### 图片展示
-![](testimg/search.png)
 
+###### 图片展示
+
+![](testimg/search.png)
 
 <h3>Picker</h3>
     
@@ -574,7 +639,9 @@
         style={[{height : 60}, styles.wigetStyle]}
     />
 ```
+
 ###### 图片展示
+
 ![](testimg/picker.png)
 
 <h3>ISinglePicker</h3>
@@ -598,9 +665,9 @@
 > | field            |          |          | dataSource 中元素为对象时必填（picker 要展示的字段） |        |
 > | style            |          |          | 单元行的样式                                         |        |
 > | valueStyle       |          |          | 选中后字体的样式                                     |        |
-> | leftStyle       |          |          | 左侧字体的样式                                     |        |
-> | rightStyle       |          |          | 右侧整体的样式                                     |        |
-> | rightTextStyle       |          |          | 右侧字体的样式                                     |        |
+> | leftStyle        |          |          | 左侧字体的样式                                       |        |
+> | rightStyle       |          |          | 右侧整体的样式                                       |        |
+> | rightTextStyle   |          |          | 右侧字体的样式                                       |        |
 > | tips             |          | String   | 提示语                                               |        |
 > | rightStyle       |          |          | 右侧整体的样式                                       |        |
 > | rightTextStyle   |          |          | 右侧字体的样式                                       |        |
@@ -645,9 +712,9 @@
 > | field            |          |          | dataSource 中元素为对象时必填（picker 要展示的字段） |        |
 > | style            |          |          | 单元行的样式                                         |        |
 > | valueStyle       |          |          | 选中后字体的样式                                     |        |
-> | leftStyle       |          |          | 左侧字体的样式                                     |        |
-> | rightStyle       |          |          | 右侧整体的样式                                     |        |
-> | rightTextStyle       |          |          | 右侧字体的样式                                     |        |
+> | leftStyle        |          |          | 左侧字体的样式                                       |        |
+> | rightStyle       |          |          | 右侧整体的样式                                       |        |
+> | rightTextStyle   |          |          | 右侧字体的样式                                       |        |
 > | tips             |          | String   | 提示语                                               |        |
 > | rightStyle       |          |          | 右侧整体的样式                                       |        |
 > | rightTextStyle   |          |          | 右侧字体的样式                                       |        |

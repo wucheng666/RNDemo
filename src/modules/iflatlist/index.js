@@ -146,17 +146,17 @@ export default class IFlatList extends Component {
 
 
     _queryList = (params) => {
-        request.post(`${Constants.apiHost}/itemmanage/item/queryProductList`, params, this._callback.bind(this, params), true);
+        request.post(this.props.url, params, this._callback.bind(this, params), true);
     }
 
 
     _callback = (params, data, flag) => {
         if (__DEV__) {
-            //console.log(`queryAuntList-- data-->>${data}, flag-->>${flag}`);
+            console.log(`列表-- flag-->>`,data, flag);
         }
 
         let result = {}
-        result.dataList = params.pageNum > 0 ? _self.props.data.dataList.concat(data.dataList) : data.dataList
+        result.dataList = params.pageNum > 0 ? this.props.data.dataList.concat(data.dataList) : data.dataList
         result.totalCount = data.totalCount
 
         let hasNoContent = false

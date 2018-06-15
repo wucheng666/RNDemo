@@ -24,6 +24,7 @@ import SearchBar from "./searchbar";
 import RowCell from "./sideslip";
 import Picker from "./form/picker";
 import DatePicker from "./form/date-picker";
+import BMIcon from "./bm-icon";
 
 const modules = {
     Button: Button,
@@ -46,6 +47,7 @@ const modules = {
     ModalSelect : ModalSelect,
     SearchBar : SearchBar,
     RowCell : RowCell,
+    BMIcon : BMIcon
 };
 
 module.exports = modules;

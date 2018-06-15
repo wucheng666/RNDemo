@@ -20,7 +20,8 @@ export default class IInput extends Component {
         unit : "", //单位
         placeholderTextColor : "#999999", //注释的颜色
         iInputCallBack : ()=>{},
-        keyboardType : "default"
+        keyboardType : "default",
+        required : false,   //判断是否必填
     }
 
     componentDidMount() {}
@@ -28,7 +29,14 @@ export default class IInput extends Component {
     render() {
         return (
             <View style={[styles.input, this.props.style]}>
-                <Text style={[styles.inputLeft, this.props.leftStyle]}>{this.props.rightName}</Text>
+                <View style={{flexDirection : "row", alignItems : "center"}}>
+                    <Text style={[styles.inputLeft, this.props.leftStyle]}>{this.props.rightName}</Text>
+                    {
+                        this.props.required ?
+                            <Text style={{ marginLeft : 5, fontFamily:MainStyle.font.family.regular, fontSize : 16, color : "#EB5040"}}>*</Text>
+                            : null
+                    }
+                </View>
                 <View style={[{flexDirection:"row", justifyContent:"center", alignItems:"center", marginRight : 16}]}>
                     <TextInput
                         style={[styles.inputRight, this.props.rightStyle]}
