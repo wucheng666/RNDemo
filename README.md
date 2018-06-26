@@ -26,12 +26,12 @@
                 needRefresh : false
             })
         }
-        
+
     3.  导航栏分别是:  左侧返回  中间标题  后侧处理
         先有 从列表页A到编辑页B，
         1.点返回时需要刷新A(场景：列表页A 到详情页B 编辑是在C页， C 处理完回到B ，此时在B页点返回需要刷新A页)
         2.点返回不需要刷新A
-        
+
         在B页重写backPress方法如下：
             constructor(props) {
                 super(props)
@@ -39,7 +39,7 @@
                     gBack : true, //默认点击返回键（即不操作页面）
                 }
             }
-            
+
             backPress(){
                 if(this.state.gBack){ //默认点击返回了，不需要刷新前一个页面（自行控制）
                     this.setParams({
@@ -50,7 +50,6 @@
                      this.goBackToRoute("staffmanage", {title : "员工管理"})
                  }
             }
-
 ```
 
 <h3>Confirm</h3>
@@ -522,7 +521,7 @@
        placeholder={"请输入左侧名称"}
        placeholderTextColor={MainStyle.font.color.color4}
        value={this.state.inputVal}
-       myInputCallBack={value => {
+       iInputCallBack={value => {
            this.setState({ inputVal: value })
        }}
        style={[styles.wigetStyle]}
@@ -703,37 +702,37 @@
 
 ###### 参数说明
 
-> | 参数             | 是否必填 | 参数类型 | 说明                                                 | 默认值 |
-> | :--------------- | :------- | :------- | :--------------------------------------------------- | :----- |
-> | labelText        | true     |          | 左侧文案                                             |        |
-> | dataSource       | true     | Arrry    | 数据源集合                                           |        |
-> | value            |          |          | 选中的值                                             |        |
-> | placeholder      |          |          | 未输入值前的文案                                     |        |
-> | field            |          |          | dataSource 中元素为对象时必填（picker 要展示的字段） |        |
-> | style            |          |          | 单元行的样式                                         |        |
-> | valueStyle       |          |          | 选中后字体的样式                                     |        |
-> | leftStyle        |          |          | 左侧字体的样式                                       |        |
-> | rightStyle       |          |          | 右侧整体的样式                                       |        |
-> | rightTextStyle   |          |          | 右侧字体的样式                                       |        |
-> | tips             |          | String   | 提示语                                               |        |
-> | rightStyle       |          |          | 右侧整体的样式                                       |        |
-> | rightTextStyle   |          |          | 右侧字体的样式                                       |        |
-> | hasChildren      |          |          | 判断是否有自定义内容                                 | false  |
-> | placeholderStyle |          |          | 默认提示的样式                                       |        |
+> | 参数              | 是否必填 | 参数类型 | 说明                                      | 默认值   |
+> | :---------------- | :------- | :------- | :---------------------------------------- | :------- |
+> | labelText         | true     |          | 左侧文案                                  |          |
+> | labelStyle        |          | object   | labelText 的文案样式                      |          |
+> | returnValueFormat |          | string   | 返回时间字符串样式，例如 YYYY-MM-DD HH:mm |          |
+> | startTime         |          |          | 可选择的最早时间                          |          |
+> | lastTime          |          |          | 可选择的最晚时间                          |          |
+> | value             |          |          | 选择的值                                  |          |
+> | placeholder       |          |          | 选择提示文案                              |          |
+> | placeholderStyle  |          |          | 选择提示文案样式                          |          |
+> | style             |          |          | 行整体样式                                |          |
+> | timeMode          |          |          | 时间选择器的类型                          | datetime |
 
 ###### 示例
 
 ```
-   <ISinglePicker
+   <IDatePicker
+       labelText={"IDatePicker"}
+       // labelStyle={{fontSize : MainStyle.font.size.size14, color : MainStyle.font.color.color3}}
+       timeMode="date"
+       returnValueFormat={"YYYY-MM-DD"}
+       startTime={new Date().format("yyyy-MM-dd")}
+       // lastTime={new Date(new Date().setFullYear(new Date().getFullYear() + 1)).format(
+       //     "yyyy-MM-dd hh:mm"
+       // )}
+       // startTime={new Date().format("yyyy-MM-dd hh:mm")}
+       placeholder="请选择具体小时"
+       // placeholderStyle={{fontSize : MainStyle.font.size.size14, color : MainStyle.font.color.color4}}
+       // value={""}
+       valueStyle={{fontSize : MainStyle.font.size.size14, color : MainStyle.font.color.color3}}
+       onSelect={(value)=>console.log(value)}
        style={styles.wigetStyle}
-       labelText="IPicker"
-       dataSource={[{id : 1, name : "name1"}, {id : 2, name : "name2"}, {id : 3, name : "name3"}, {id : 4, name : "name4"}]}
-       field={"name"}
-       property="rebate"
-       placeholder="请选择"
-       placeholderStyle={{color : MainStyle.font.color.color3}}
-       value={""}
-       editable={true}
-       onChange={(value)=>console.log(value)}
-   />
+    />
 ```
